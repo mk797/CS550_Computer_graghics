@@ -135,7 +135,7 @@ BmpToTexture( char *filename, int *width, int *height )
 	InfoHeader.biClrImportant = ReadInt( fp );
 
 
-	// fprintf( stderr, "Image size found: %d x %d\n", ImageWidth, ImageHeight );
+	//fprintf( stderr, "Image size found: %d x %d\n", ImageWidth, ImageHeight );
 
 
 	// pixels will be stored bottom-to-top, left-to-right:

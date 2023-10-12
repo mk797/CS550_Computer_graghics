@@ -267,7 +267,7 @@ MulArray3(float factor, float a, float b, float c )
 
 //#include "setmaterial.cpp"
 //#include "setlight.cpp"
-//#include "osusphere.cpp"
+#include "osusphere.cpp"
 //#include "osucone.cpp"
 //#include "osutorus.cpp"
 //#include "bmptotexture.cpp"
@@ -820,56 +820,50 @@ InitLists( )
 
 	// create the object:
 
-	BoxList = glGenLists( 1 );
+	BoxList = glGenLists( 2 );
 	glNewList( BoxList, GL_COMPILE );
 
-		glBegin( GL_QUADS );
+		glBegin(GL_QUADS);
 
-			glColor3f( 1., 0., 0. );
+ 	glColor3f( 1., 0., 0. );
+    // Front face (z-positive direction)
+    glVertex3f(-1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, 0.0f, 1.0f);
+    glVertex3f(-1.0f, 0.0f, 1.0f);
 
-				glNormal3f( 1., 0., 0. );
-					glVertex3f(  dx, -dy,  dz );
-					glVertex3f(  dx, -dy, -dz );
-					glVertex3f(  dx,  dy, -dz );
-					glVertex3f(  dx,  dy,  dz );
+    // ... Add the other 5 faces of the cube similarly
 
-				glNormal3f(-1., 0., 0.);
-					glVertex3f( -dx, -dy,  dz);
-					glVertex3f( -dx,  dy,  dz );
-					glVertex3f( -dx,  dy, -dz );
-					glVertex3f( -dx, -dy, -dz );
+	glVertex3f(-1.0f, -1.0f, -1.0f);
+    glVertex3f(1.0f, -1.0f, -1.0f);
+    glVertex3f(1.0f, 0.0f, -1.0f);
+    glVertex3f(-1.0f, 0.0f, -1.0f);
 
-			glColor3f( 0., 1., 0. );
+	glVertex3f(-1.0f, 0.0f, 1.0f);
+    glVertex3f(-1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f);
+    glVertex3f(1.0f, -1.0f, 1.0f);
 
-				glNormal3f(0., 1., 0.);
-					glVertex3f( -dx,  dy,  dz );
-					glVertex3f(  dx,  dy,  dz );
-					glVertex3f(  dx,  dy, -dz );
-					glVertex3f( -dx,  dy, -dz );
+    glEnd();
+	
+	glColor3f( 0., 1., 0. );
+    // Roof of the house - a triangular prism on top of the cube
+    glBegin(GL_TRIANGLES);
 
-				glNormal3f(0., -1., 0.);
-					glVertex3f( -dx, -dy,  dz);
-					glVertex3f( -dx, -dy, -dz );
-					glVertex3f(  dx, -dy, -dz );
-					glVertex3f(  dx, -dy,  dz );
+    // Front triangle (z-positive direction)
+    glVertex3f(0.0f, 1.0f, 1.0f);  // Top vertex of the triangle
+    glVertex3f(-1.0f, 0.0f, 1.0f);  // Base-left vertex
+    glVertex3f(1.0f, 0.0f, 1.0f);   // Base-right vertex
 
-			glColor3f(0., 0., 1.);
+    // ... Add the back triangle and the three rectangular faces connecting them
 
-				glNormal3f(0., 0., 1.);
-					glVertex3f(-dx, -dy, dz);
-					glVertex3f( dx, -dy, dz);
-					glVertex3f( dx,  dy, dz);
-					glVertex3f(-dx,  dy, dz);
+	glVertex3f(0.0f, 1.0f, -1.0f);  // Top vertex of the triangle
+    glVertex3f(-1.0f, 0.0f, -1.0f);  // Base-left vertex
+    glVertex3f(1.0f, 0.0f, -1.0f);
 
-				glNormal3f(0., 0., -1.);
-					glVertex3f(-dx, -dy, -dz);
-					glVertex3f(-dx,  dy, -dz);
-					glVertex3f( dx,  dy, -dz);
-					glVertex3f( dx, -dy, -dz);
+    glEnd();
 
-		glEnd( );
-
-	glEndList( );
+    glEndList();
 
 
 	// create the axes:
@@ -877,7 +871,7 @@ InitLists( )
 	AxesList = glGenLists( 1 );
 	glNewList( AxesList, GL_COMPILE );
 		glLineWidth( AXES_WIDTH );
-			Axes( 1.5 );
+			Axes( 100 );
 		glLineWidth( 1. );
 	glEndList( );
 }
